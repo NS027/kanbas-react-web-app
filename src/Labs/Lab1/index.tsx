@@ -40,14 +40,26 @@ tag to tell browsers to render the gaps.
         <h5>Ordered List Tag</h5>
         How to make pancakes:
         <ol id="wd-pancakes">
-        <li>1. Mix dry ingredients.</li>
-        <li>2. Add wet ingredients.</li>
-        <li>3. Stir to combine.</li>
-        <li>4. Heat a skillet or griddle.</li>
-        <li>5. Pour batter onto the skillet.</li>
-        <li>6. Cook until bubbly on top.</li>
-        <li>7. Flip and cook the other side.</li>
-        <li>8. Serve and enjoy!</li>
+        <li>Mix dry ingredients.</li>
+        <li>Add wet ingredients.</li>
+        <li>Stir to combine.</li>
+        <li>Heat a skillet or griddle.</li>
+        <li>Pour batter onto the skillet.</li>
+        <li>Cook until bubbly on top.</li>
+        <li>Flip and cook the other side.</li>
+        <li>Serve and enjoy!</li>
+        </ol>
+        My favorite recipe:
+        <ol id="wd-your-favorite-recipe">
+        <li>Mix dry ingredients.</li>
+        <li>Add wet ingredients.</li>
+        <li>Add some honey.</li>
+        <li>Stir to combine.</li>
+        <li>Heat a skillet or griddle.</li>
+        <li>Pour batter onto the skillet.</li>
+        <li>Cook until bubbly on top.</li>
+        <li>Flip and cook the other side.</li>
+        <li>Serve with maple syrup and enjoy!</li>
         </ol>
       </div>
     
