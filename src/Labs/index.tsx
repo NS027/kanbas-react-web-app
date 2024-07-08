@@ -5,4 +5,5 @@ export default function Labs() {
       <h1>Labs</h1>
       <Lab1 />
     </div>
-);}
+    );
+}
