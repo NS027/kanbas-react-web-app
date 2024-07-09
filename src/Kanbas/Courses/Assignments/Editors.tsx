@@ -83,11 +83,11 @@ export default function AssignmentEditor() {
           <table>
             <td align="left" valign="top">
               <label htmlFor="wd-available-from">Available from</label><br />
-              <input type="date" id="wd-available-from" defaultValue="05/06/2024" />
+              <input type="date" id="wd-available-from" defaultValue="2024-05-06" />
             </td>
             <td align="left" valign="top">
               <label htmlFor="wd-available-until">Until</label><br />
-              <input type="date" id="wd-available-until" defaultValue="05/28/2024" />
+              <input type="date" id="wd-available-until" defaultValue="2024-05-28" />
             </td>
           </table>
           <hr />
