@@ -19,7 +19,7 @@ export default function Dashboard() {
           </div>
 
           <div className="wd-dashboard-course">
-            <img src="/images/reactjs.jpg" width={200} />
+            <img src="/images/5001.jpg" width={200} />
             <div>
               <a className="wd-dashboard-course-link"
                 href="#/Kanbas/Courses/5001/Home">
@@ -33,7 +33,7 @@ export default function Dashboard() {
           </div>
 
           <div className="wd-dashboard-course">
-            <img src="/images/reactjs.jpg" width={200} />
+            <img src="/images/5002.jpg" width={200} />
             <div>
               <a className="wd-dashboard-course-link"
                 href="#/Kanbas/Courses/5002/Home">
@@ -47,7 +47,7 @@ export default function Dashboard() {
           </div>
 
           <div className="wd-dashboard-course">
-            <img src="/images/reactjs.jpg" width={200} />
+            <img src="/images/5004.jpg" width={200} />
             <div>
               <a className="wd-dashboard-course-link"
                 href="#/Kanbas/Courses/5004/Home">
@@ -61,7 +61,7 @@ export default function Dashboard() {
           </div>
 
           <div className="wd-dashboard-course">
-            <img src="/images/reactjs.jpg" width={200} />
+            <img src="/images/5008.jpg" width={200} />
             <div>
               <a className="wd-dashboard-course-link"
                 href="#/Kanbas/Courses/5008/Home">
@@ -75,7 +75,7 @@ export default function Dashboard() {
           </div>
 
           <div className="wd-dashboard-course">
-            <img src="/images/reactjs.jpg" width={200} />
+            <img src="/images/5800.jpg" width={200} />
             <div>
               <a className="wd-dashboard-course-link"
                 href="#/Kanbas/Courses/5800/Home">
@@ -85,6 +85,34 @@ export default function Dashboard() {
                 Master Level of Algorithm
               </p>
               <a href="#/Kanbas/Courses/5800/Home"> Go </a>
+            </div>
+          </div>
+
+          <div className="wd-dashboard-course">
+            <img src="/images/5200.jpg" width={200} />
+            <div>
+              <a className="wd-dashboard-course-link"
+                href="#/Kanbas/Courses/5008/Home">
+                CS5200 Data Management
+              </a>
+              <p className="wd-dashboard-course-title">
+                Data Management with MySQL
+              </p>
+              <a href="#/Kanbas/Courses/5008/Home"> Go </a>
+            </div>
+          </div>
+
+          <div className="wd-dashboard-course">
+            <img src="/images/7980.jpg" width={200} />
+            <div>
+              <a className="wd-dashboard-course-link"
+                href="#/Kanbas/Courses/5008/Home">
+                CS7980 Capstone
+              </a>
+              <p className="wd-dashboard-course-title">
+                Capstone for Industry Project
+              </p>
+              <a href="#/Kanbas/Courses/5008/Home"> Go </a>
             </div>
           </div>
         </div>
