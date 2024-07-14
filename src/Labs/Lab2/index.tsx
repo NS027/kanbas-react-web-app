@@ -1,5 +1,6 @@
 import "./index.css"
 import ReactIconsSampler from "./ReactIcons";
+import ScreenSizeLabel from "./ScreenSizeLable";
 export default function Lab2() {
     return (
       <div className="container">
@@ -411,6 +412,7 @@ export default function Lab2() {
           </div>
         </div>
 
+      <ScreenSizeLabel />
     
       </div>
     );
