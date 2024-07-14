@@ -137,5 +137,11 @@ margin: 30px;
     top: 20px;
     left: 120px;      
 }
+/* this is the fixed position */
+.wd-pos-fixed {
+    position: fixed;
+    right: 0px;
+    bottom: 50%;
+}  
  
          
