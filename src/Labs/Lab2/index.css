@@ -49,3 +49,17 @@
     border-color: #ff7070; }
  .wd-border-blue {
     border-color: #7070ff; }
+/* margins and padding */
+.wd-padded-top-left {
+    padding-top: 50px;
+    padding-left: 50px;
+}
+.wd-padded-bottom-right {
+    padding-bottom: 50px;
+    padding-right: 50px;
+}
+
+.wd-padding-fat {
+padding: 50px;
+}
+  
