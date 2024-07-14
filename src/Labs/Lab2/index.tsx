@@ -1,4 +1,5 @@
 import "./index.css"
+import ReactIconsSampler from "./ReactIcons";
 export default function Lab2() {
     return (
       <div id="wd-lab2">
@@ -301,7 +302,7 @@ export default function Lab2() {
           </div>
         </div>
 
-
+      <ReactIconsSampler />
 
         
       </div>
