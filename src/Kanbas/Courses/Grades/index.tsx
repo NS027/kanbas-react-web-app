@@ -1,38 +1,62 @@
 import React from 'react';
-import { FaPlus, FaEllipsisV, FaFilter } from 'react-icons/fa';
+import { FaFileImport, FaFileExport, FaCog, FaSearch, FaFilter } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './GradeStyle.css';
 
 export default function Grades() {
   return (
     <div id="wd-grades" className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Grades</h2>
-        <div>
-          <button className="btn btn-outline-primary me-2"><FaPlus /> Import</button>
-          <button className="btn btn-outline-secondary"><FaEllipsisV /> Export</button>
+      <div className="d-flex justify-content-end align-items-center mb-3">
+        <button className="btn btn-outline-secondary me-2 btn-icon">
+          <FaFileImport />
+          Import
+        </button>
+        <div className="btn-group me-2">
+          <button className="btn btn-outline-secondary btn-icon">
+            <FaFileExport />
+            Export
+          </button>
+          <button className="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+          </button>
+          <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href="#">Export as CSV</a></li>
+            <li><a className="dropdown-item" href="#">Export as PDF</a></li>
+          </ul>
         </div>
+        <button className="btn btn-outline-secondary btn-icon">
+          <FaCog />
+        </button>
       </div>
       
       <div className="mb-3">
         <div className="row">
           <div className="col">
-            <label htmlFor="search-students" className="form-label">Student Names</label>
-            <select id="search-students" className="form-select">
-              <option>Search Students</option>
-              {/* Add student options here */}
-            </select>
+            <label htmlFor="search-students" className="form-label"><strong>Student Names</strong></label>
+            <div className="input-group">
+              <span className="input-group-text"><FaSearch /></span>
+              <select id="search-students" className="form-select">
+                <option>Search Students</option>
+                {/* Add student options here */}
+              </select>
+            </div>
           </div>
           <div className="col">
-            <label htmlFor="search-assignments" className="form-label">Assignment Names</label>
-            <select id="search-assignments" className="form-select">
-              <option>Search Assignments</option>
-              {/* Add assignment options here */}
-            </select>
-          </div>
-          <div className="col-auto d-flex align-items-end">
-            <button className="btn btn-outline-secondary"><FaFilter /> Apply Filters</button>
+            <label htmlFor="search-assignments" className="form-label"><strong>Assignment Names</strong></label>
+            <div className="input-group">
+              <span className="input-group-text"><FaSearch /></span>
+              <select id="search-assignments" className="form-select">
+                <option>Search Assignments</option>
+                {/* Add assignment options here */}
+              </select>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="mb-3 d-flex justify-content-start">
+        <button className="btn btn-outline-secondary btn-apply-filters">
+          <FaFilter /> Apply Filters
+        </button>
       </div>
       
       <div id="wd-css-styling-tables">
