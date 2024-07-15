@@ -41,13 +41,8 @@ export default function ModulesControls() {
               Unpublish modules only
             </a>
           </li>
-          {/* Create two more items with IDs wd-unpublish-all-modules-and-items and
-              wd-unpublish-modules-only with labels Unpublish all modules and items
-              and Unpublish modules only */}
         </ul>
       </div>
-      {/* Implement the View Progress and Collapse All buttons
-          with IDs wd-view-progress and wd-collapse-all */}
       <div className="d-inline me-1 float-end">
         <button id="wd-view-progress" className="btn btn-lg btn-secondary me-1">View Progress</button>
       </div>

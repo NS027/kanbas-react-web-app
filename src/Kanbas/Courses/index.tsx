@@ -6,6 +6,7 @@ import AssignmentEditor from "./Assignments/Editors";
 import Grades from "./Grades";
 import { Navigate, Route, Routes } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
+
 export default function Courses() {
   return (
     <div id="wd-courses">
@@ -14,7 +15,7 @@ export default function Courses() {
         Course 1234
       </h2>
       <hr />
-      
+
       <div className="d-flex">
         <CoursesNavigation />
         <div className="content flex-grow-1 p-3">
@@ -30,5 +31,6 @@ export default function Courses() {
       </div>
     </div>
 );}
+
 
   

@@ -36,7 +36,7 @@ export default function Grades() {
               <span className="input-group-text"><FaSearch /></span>
               <select id="search-students" className="form-select">
                 <option>Search Students</option>
-                {/* Add student options here */}
+                {/* Student options */}
               </select>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function Grades() {
               <span className="input-group-text"><FaSearch /></span>
               <select id="search-assignments" className="form-select">
                 <option>Search Assignments</option>
-                {/* Add assignment options here */}
+                {/* Assignment options */}
               </select>
             </div>
           </div>

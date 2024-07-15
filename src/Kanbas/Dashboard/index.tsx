@@ -6,17 +6,6 @@ export default function Dashboard() {
         <div id="wd-dashboard-courses" className="row">
           <div className="row row-cols-1 row-cols-md-5 g-4">
             <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-              {/* <img src="/images/reactjs.jpg" width={200} />
-              <div>
-                <a className="wd-dashboard-course-link"
-                  href="#/Kanbas/Courses/1234/Home">
-                  CS1234 React JS
-                </a>
-                <p className="wd-dashboard-course-title">
-                  Full Stack software developer
-                </p>
-                <a href="#/Kanbas/Courses/1234/Home"> Go </a>
-              </div> */}
               <div className="card">
                 <a className="wd-dashboard-course-link text-decoration-none text-dark"
                   href="#/Kanbas/Courses/1234/Home">
@@ -35,17 +24,6 @@ export default function Dashboard() {
             </div>
 
             <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-              {/* <img src="/images/5001.jpg" width={200} />
-              <div>
-                <a className="wd-dashboard-course-link"
-                  href="#/Kanbas/Courses/5001/Home">
-                  CS5001 Intensive Foundation of CS
-                </a>
-                <p className="wd-dashboard-course-title">
-                  Foundation of Computer Science
-                </p>
-                <a href="#/Kanbas/Courses/5001/Home"> Go </a>
-              </div> */}
               <div className="card">
                 <a className="wd-dashboard-course-link text-decoration-none text-dark"
                   href="#/Kanbas/Courses/1234/Home">

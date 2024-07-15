@@ -7,7 +7,7 @@ import { AiOutlineAim } from "react-icons/ai";
 import { FaRegChartBar } from "react-icons/fa";
 import { FaBullhorn } from "react-icons/fa";
 import { RiNotification3Line } from "react-icons/ri";
-{/* Find more icons */}
+
 export default function CourseStatus() {
 return (
   <div id="wd-course-status" style={{ width: "300px" }}>
@@ -35,7 +35,7 @@ return (
       <LiaFileImportSolid className="me-2 fs-5" />
       Import from Commons
     </button>
-    {/* Complete the rest of the buttons */}
+
     <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
       <AiOutlineAim  className="me-2 fs-5" />
       Choose Home Page
