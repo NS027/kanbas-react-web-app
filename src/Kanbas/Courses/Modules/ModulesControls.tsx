@@ -1,4 +1,5 @@
 import { FaPlus } from "react-icons/fa6";
+import { MdDoNotDisturbAlt } from "react-icons/md";
 import GreenCheckmark from "./GreenCheckmark";
 export default function ModulesControls() {
   return (
@@ -28,15 +29,15 @@ export default function ModulesControls() {
           </li>
 
           <li>
-            <a id="wd-publish-modules-only-button" className="dropdown-item disabled"  href="#">
-              <GreenCheckmark />
+            <a id="wd-publish-modules-only-button" className="dropdown-item"  href="#">
+              <MdDoNotDisturbAlt />
               Unpublish all modules and items
             </a>
           </li>
           
           <li>
-            <a id="wd-publish-modules-only-button" className="dropdown-item disabled" href="#">
-              <GreenCheckmark />
+            <a id="wd-publish-modules-only-button" className="dropdown-item" href="#">
+              <MdDoNotDisturbAlt />
               Unpublish modules only
             </a>
           </li>
