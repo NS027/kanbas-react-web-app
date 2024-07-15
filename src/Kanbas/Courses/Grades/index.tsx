@@ -1,6 +1,5 @@
 import React from 'react';
-import { BsGripVertical } from 'react-icons/bs';
-import { FaPlus, FaEllipsisV } from 'react-icons/fa';
+import { FaPlus, FaEllipsisV, FaFilter } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Grades() {
@@ -18,75 +17,58 @@ export default function Grades() {
         <div className="row">
           <div className="col">
             <label htmlFor="search-students" className="form-label">Student Names</label>
-            <input id="search-students" type="text" className="form-control" placeholder="Search Students" />
+            <select id="search-students" className="form-select">
+              <option>Search Students</option>
+              {/* Add student options here */}
+            </select>
           </div>
           <div className="col">
             <label htmlFor="search-assignments" className="form-label">Assignment Names</label>
-            <input id="search-assignments" type="text" className="form-control" placeholder="Search Assignments" />
+            <select id="search-assignments" className="form-select">
+              <option>Search Assignments</option>
+              {/* Add assignment options here */}
+            </select>
           </div>
           <div className="col-auto d-flex align-items-end">
-            <button className="btn btn-outline-secondary"><FaPlus /> Apply Filters</button>
+            <button className="btn btn-outline-secondary"><FaFilter /> Apply Filters</button>
           </div>
         </div>
       </div>
       
-      <table className="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>A1 SETUP<br />Out of 100</th>
-            <th>A2 HTML<br />Out of 100</th>
-            <th>A3 CSS<br />Out of 100</th>
-            <th>A4 BOOTSTRAP<br />Out of 100</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Jane Adams</td>
-            <td>100%</td>
-            <td>96.67%</td>
-            <td>92.18%</td>
-            <td>66.42%</td>
-          </tr>
-          <tr>
-            <td>Christina Allen</td>
-            <td>100%</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Simreen Ansari</td>
-            <td></td>
-            <td>100%</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Han Bao</td>
-            <td>100%</td>
-            <td>100%</td>
-            <td>
-              <input type="number" defaultValue="88.00" className="form-control" />
-            </td>
-            <td>98.99%</td>
-          </tr>
-          <tr>
-            <td>Mahi Sai Srinivas Bobbili</td>
-            <td>100%</td>
-            <td>96.67%</td>
-            <td>98.78%</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Siran Cao</td>
-            <td>100%</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="wd-css-styling-tables">
+        <table className="table table-bordered table-hover text-center align-middle">
+          <thead className="table-light">
+            <tr>
+              <th className="align-middle"><strong>Student Name</strong></th>
+              {['A1 SETUP', 'A2 HTML', 'A3 CSS', 'A4 BOOTSTRAP'].map((assignment, idx) => (
+                <th key={idx} className="align-middle">
+                  {assignment}<br />
+                  <span style={{ fontSize: 'smaller', fontWeight: 'normal' }}>Out of 100</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { name: 'Jane Adams', grades: ['100%', '96.67%', '92.18%', '66.42%'] },
+              { name: 'Christina Allen', grades: ['100%', '100%', '100%', '100%'] },
+              { name: 'Simreen Ansari', grades: ['100%', '100%', '100%', '100%'] },
+              { name: 'Han Bao', grades: ['100%', '100%', '88.00%', '98.99%'] },
+              { name: 'Mahi Sai Srinivas Bobbili', grades: ['100%', '96.67%', '98.78%', '100%'] },
+              { name: 'Siran Cao', grades: ['100%', '100%', '100%', '100%'] },
+            ].map((student, index) => (
+              <tr key={student.name} className={index % 2 === 0 ? 'table-light' : ''}>
+                <td className="text-danger align-middle">{student.name}</td>
+                {student.grades.map((grade, idx) => (
+                  <td key={idx} className="align-middle">
+                    <input type="text" defaultValue={grade} className="form-control text-center" />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
