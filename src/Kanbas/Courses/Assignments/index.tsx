@@ -1,10 +1,11 @@
 import React from 'react';
 import AssignmentControls from './AssignmentControls';
-import LessonControlButtons from './AssignmentControlButtons';
+import AssignmentControlButtons from './AssignmentControlButtons';
 import { BsGripVertical } from 'react-icons/bs';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { FaPlus } from 'react-icons/fa6';
 import "./StyledBox.css";
+import { AiOutlineFileText } from 'react-icons/ai';
 export default function Assignments() {
     return (
       <div id="wd-assignments">
@@ -67,7 +68,7 @@ export default function Assignments() {
               </div>
             </div>
 
-            <ul className="wd-lessons list-group rounded-0">
+            {/* <ul className="wd-lessons list-group rounded-0">
                 <li className="wd-lesson list-group-item p-3 ps-1">
                 <BsGripVertical className="me-2 fs-3" />
                 A1
@@ -83,6 +84,56 @@ export default function Assignments() {
                 A3
                 <LessonControlButtons />
                 </li>
+            </ul> */}
+            <ul className="wd-assignments list-group rounded-0">
+              <li className="wd-assignment list-group-item p-3 ps-1 d-flex align-items-center">
+                <BsGripVertical className="me-2 fs-3" />
+                <AiOutlineFileText className="me-2 fs-3" style={{ color: 'green' }} />
+                <div className="flex-grow-1">
+                  <div className="fw-bold">
+                    <a className="wd-assignment-link"
+                      href="#/Kanbas/Courses/1234/Assignments/124">
+                      A1
+                    </a>
+                    </div>
+                  <div className="text-muted">
+                    <span className="text-danger">Multiple Modules</span> | <span className="text-muted">Not available until May 6 at 12:00am</span> | Due May 13 at 11:59pm | 100 pts
+                  </div>
+                </div>
+                <AssignmentControlButtons />
+              </li>
+              <li className="wd-assignment list-group-item p-3 ps-1 d-flex align-items-center">
+                <BsGripVertical className="me-2 fs-3" />
+                <AiOutlineFileText className="me-2 fs-3" style={{ color: 'green' }} />
+                <div className="flex-grow-1">
+                  <div className="fw-bold">
+                    <a className="wd-assignment-link"
+                      href="#/Kanbas/Courses/1234/Assignments/124">
+                      A2
+                    </a>
+                  </div>
+                  <div className="text-muted">
+                    <span className="text-danger">Multiple Modules</span> | <span className="text-muted">Not available until May 13 at 12:00am</span> | Due May 20 at 11:59pm | 100 pts
+                  </div>
+                </div>
+                <AssignmentControlButtons />
+              </li>
+              <li className="wd-assignment list-group-item p-3 ps-1 d-flex align-items-center">
+                <BsGripVertical className="me-2 fs-3" />
+                <AiOutlineFileText className="me-2 fs-3" style={{ color: 'green' }} />
+                <div className="flex-grow-1">
+                  <div className="fw-bold">
+                    <a className="wd-assignment-link"
+                      href="#/Kanbas/Courses/1234/Assignments/124">
+                      A3
+                    </a>
+                  </div>
+                  <div className="text-muted">
+                    <span className="text-danger">Multiple Modules</span> | <span className="text-muted">Not available until May 20 at 12:00am</span> | Due May 27 at 11:59pm | 100 pts
+                  </div>
+                </div>
+                <AssignmentControlButtons />
+              </li>
             </ul>
             </li>
         </ul>
