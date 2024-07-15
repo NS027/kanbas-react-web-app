@@ -5,15 +5,6 @@ import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
  
 export default function KanbasNavigation() {
     return (
-      // <ul id="wd-kanbas-navigation">
-      //   <li><a id="wd-neu-link" target="_blank" href="https://www.northeastern.edu/">Northeastern</a></li>
-      //   <li><a id="wd-account-link" href="#/Kanbas/Account">Account</a></li>
-      //   <li><a id="wd-dashboard-link" href="#/Kanbas/Dashboard">Dashboard</a></li>
-      //   <li><a id="wd-course-link" href="#/Kanbas/Courses">Courses</a></li>
-      //   <li><a id="wd-calendar-link" href="#/Kanbas/Calendar">Calendar</a></li>
-      //   <li><a id="wd-inbox-link" href="#/Kanbas/Inbox">Inbox</a></li>
-      //   <li><a id="wd-labs-link" href="#/Labs">Labs</a></li>
-      // </ul>
       <div id="wd-kanbas-navigation" style={{ width: 120}}
             className="list-group rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2">
         <a id="wd-neu-link" target="_blank" href="https://www.northeastern.edu/"
@@ -50,8 +41,6 @@ export default function KanbasNavigation() {
                    bg-black text-center border-0">
         <LiaCogSolid className="fs-1 text-danger" /><br />
         Labs </a>
-
-
       </div>
   );}
   

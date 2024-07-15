@@ -13,32 +13,18 @@ export default function Courses() {
         Course 1234
       </h2>
       <hr />
-      {/* <table width="100%">
-        <tr>
-          <td valign="top">
-            <CoursesNavigation />
-          </td>
-          <td valign="top">
-            <Routes>
-            <Route path="/"
-                     element={<Navigate to="Home" />} />
-              <Route path="Home" element={<Home />} />
-            <Route path="Home" element={<h3>Home</h3>} />
+      
+      <div className="d-flex">
+        <CoursesNavigation />
+        <div className="content flex-grow-1 p-3">
+          <Routes>
+            <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
-            <Route path="Assignments"element={<Assignments />} />
-            <Route path="Assignments/:id" element={<AssignmentEditor />} />
-            </Routes>
-          </td>
-        </tr>
-      </table> */}
-      <CoursesNavigation />
-      <div>
-        <Routes>
-          <Route path="Home" element={<Home />} />
-          <Route path="Modules" element={<Modules />} />
-          <Route path="Assignments" element={<Assignments />} />
-          <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-        </Routes>
+            <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="/" element={<Navigate to="Home" />} />
+          </Routes>
+        </div>
       </div>
     </div>
 );}
