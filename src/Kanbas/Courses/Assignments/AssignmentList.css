@@ -1,0 +1,19 @@
+/* AssignmentList.css */
+.wd-assignments {
+    background-color: #f8f9fa; /* Light background color */
+  }
+  
+  .wd-assignment {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .assignment-control-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text-muted {
+    color: #6c757d;
+  }

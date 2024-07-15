@@ -1,0 +1,14 @@
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    padding: 0.375rem 0.75rem;
+    height: 2.5rem; 
+  }
+  
+  .btn-outline-secondary.btn-icon {
+    padding: 0.375rem 0.75rem;
+    height: 2.5rem; 
+  }
