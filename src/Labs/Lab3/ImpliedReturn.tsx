@@ -1,6 +1,4 @@
-const multiply = (a: number, b: number) => {
-    return    a * b;
-}
+const multiply = (a: number, b: number) => a * b;
 
 export default function ImpliedReturn() {
     const fourTimesFive = multiply(4, 5);
