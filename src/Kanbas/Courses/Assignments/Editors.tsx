@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from 'react-router-dom';
+import assignments from "../../Database/assignments.json";
 
 const options = [
   { value: 'everyone', label: 'Everyone' },
@@ -10,12 +12,17 @@ const options = [
 ];
 
 export default function AssignmentEditor() {
+  const { aid } = useParams();
+  const courseAssignments = assignments.filter(assignment => assignment._id === aid); 
+  const assignment = courseAssignments[0];
   return (
     <div id="wd-assignments-editor" className="container mt-4">
+
       <div className="mb-3">
         <label htmlFor="wd-name" className="form-label">Assignment Name</label>
-        <input id="wd-name" defaultValue="A1" className="form-control" />
+        <input id={`wd-name-${assignment._id}`} defaultValue={assignment.title} className="form-control" />
       </div>
+
       
       <div className="mb-3">
         <label htmlFor="wd-description" className="form-label">Description</label>
