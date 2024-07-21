@@ -1,9 +1,25 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { FaFileImport, FaFileExport, FaCog, FaSearch, FaFilter } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GradeStyle.css';
+import users from '../../Database/users.json';
+import enrollments from '../../Database/enrollments.json';
+import grades from '../../Database/grades.json';
+import assignments from '../../Database/assignments.json';
 
 export default function Grades() {
+  const { cid } = useParams();
+
+  // Get the enrolled students for the current course
+  const enrolledStudents = enrollments
+    .filter(enrollment => enrollment.course === cid)
+    .map(enrollment => users.find(user => user._id === enrollment.user))
+    .filter(student => student !== undefined);
+
+  // Get the assignments for the current course
+  const courseAssignments = assignments.filter(assignment => assignment.course === cid);
+
   return (
     <div id="wd-grades" className="container mt-4">
       <div className="d-flex justify-content-end align-items-center mb-3">
@@ -36,7 +52,9 @@ export default function Grades() {
               <span className="input-group-text"><FaSearch /></span>
               <select id="search-students" className="form-select">
                 <option>Search Students</option>
-                {/* Student options */}
+                {enrolledStudents.map(student => (
+                  <option key={student?._id}>{`${student?.firstName} ${student?.lastName}`}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -46,7 +64,9 @@ export default function Grades() {
               <span className="input-group-text"><FaSearch /></span>
               <select id="search-assignments" className="form-select">
                 <option>Search Assignments</option>
-                {/* Assignment options */}
+                {courseAssignments.map(assignment => (
+                  <option key={assignment._id}>{assignment.shortname}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -64,30 +84,26 @@ export default function Grades() {
           <thead className="table-light">
             <tr>
               <th className="align-middle"><strong>Student Name</strong></th>
-              {['A1 SETUP', 'A2 HTML', 'A3 CSS', 'A4 BOOTSTRAP'].map((assignment, idx) => (
-                <th key={idx} className="align-middle">
-                  {assignment}<br />
+              {courseAssignments.map(assignment => (
+                <th key={assignment._id} className="align-middle">
+                  {assignment.shortname}<br />{assignment.title}<br />
                   <span style={{ fontSize: 'smaller', fontWeight: 'normal' }}>Out of 100</span>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {[
-              { name: 'Jane Adams', grades: ['100%', '96.67%', '92.18%', '66.42%'] },
-              { name: 'Christina Allen', grades: ['100%', '100%', '100%', '100%'] },
-              { name: 'Simreen Ansari', grades: ['100%', '100%', '100%', '100%'] },
-              { name: 'Han Bao', grades: ['100%', '100%', '88.00%', '98.99%'] },
-              { name: 'Mahi Sai Srinivas Bobbili', grades: ['100%', '96.67%', '98.78%', '100%'] },
-              { name: 'Siran Cao', grades: ['100%', '100%', '100%', '100%'] },
-            ].map((student, index) => (
-              <tr key={student.name} className={index % 2 === 0 ? 'table-light' : ''}>
-                <td className="text-danger align-middle">{student.name}</td>
-                {student.grades.map((grade, idx) => (
-                  <td key={idx} className="align-middle">
-                    <input type="text" defaultValue={grade} className="form-control text-center" />
-                  </td>
-                ))}
+            {enrolledStudents.map((student, index) => (
+              <tr key={student?._id} className={index % 2 === 0 ? 'table-light' : ''}>
+                <td className="text-danger align-middle">{`${student?.firstName} ${student?.lastName}`}</td>
+                {courseAssignments.map(assignment => {
+                  const grade = grades.find(g => g.student === student?._id && g.assignment === assignment._id);
+                  return (
+                    <td key={assignment._id} className="align-middle">
+                      {grade ? grade.grade : 'N/A'}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
