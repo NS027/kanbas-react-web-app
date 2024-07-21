@@ -12,12 +12,14 @@ export default function Grades() {
   const { cid } = useParams();
 
   // Get the enrolled students for the current course
+  // filter the enrollments by the current course id
+  // map the enrollments to the users
+  // filter out the undefined users
   const enrolledStudents = enrollments
     .filter(enrollment => enrollment.course === cid)
     .map(enrollment => users.find(user => user._id === enrollment.user))
     .filter(student => student !== undefined);
 
-  // Get the assignments for the current course
   const courseAssignments = assignments.filter(assignment => assignment.course === cid);
 
   return (

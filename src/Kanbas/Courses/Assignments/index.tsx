@@ -12,7 +12,6 @@ import assignments from '../../Database/assignments.json';
 export default function Assignments() {
     const { cid } = useParams();
 
-    // Filter assignments based on the current course ID (cid)
     const courseAssignments = assignments.filter(assignment => assignment.course === cid);
 
     return (
