@@ -1,0 +1,20 @@
+#wd-home {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .course-status-container {
+    width: 300px;
+    flex-shrink: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .course-status-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  
+  .course-status {
+    width: 100%;
+  }
