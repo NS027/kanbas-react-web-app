@@ -6,6 +6,8 @@ import { Navigate } from "react-router";
 import "./styles.css";
 import { useState } from "react";
 import * as db from "./Database";
+import store from "./store";
+import { Provider } from "react-redux";
 
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>(db.courses);
@@ -31,6 +33,7 @@ export default function Kanbas() {
       );
   };
     return (
+      <Provider store={store}>
       <div id="wd-kanbas">
         <KanbasNavigation />
         <div className="wd-main-content-offset p-3">
@@ -52,5 +55,6 @@ export default function Kanbas() {
         </Routes>
         </div>
       </div>
+      </Provider>
   );}
   
