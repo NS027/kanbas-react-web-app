@@ -3,6 +3,7 @@ import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'react-router-dom';
 import assignments from "../../Database/assignments.json";
+import * as db from "../../Database";
 
 const options = [
   { value: 'everyone', label: 'Everyone' },
@@ -13,8 +14,14 @@ const options = [
 
 export default function AssignmentEditor() {
   const { aid } = useParams();
-  const courseAssignments = assignments.filter(assignment => assignment._id === aid); 
-  const assignment = courseAssignments[0];
+  const assignments = db.assignments;
+  const assignment = assignments.find(assignment => assignment._id === aid);
+  // const courseAssignments = assignments.filter(assignment => assignment._id === aid); 
+  // const assignment = courseAssignments[0];
+
+  if (!assignment) {
+    return <div>Assignment not found ID: {aid}</div>;
+  }
   return (
     <div id="wd-assignments-editor" className="container mt-4">
 

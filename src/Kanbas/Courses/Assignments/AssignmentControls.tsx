@@ -1,7 +1,11 @@
-import GreenCheckmark from "./GreenCheckmark";
+// AssingmentControls.tsx
 import { SlMagnifier } from "react-icons/sl";
 import "./InputWithIcon.css";
-export default function AssignmentControls() {
+import AssignmentEditor from "./AssignmentEditor";
+export default function AssignmentControls(
+    { assignmentName, setAssignmentName, addAssignment }:
+    { assignmentName: string; setAssignmentName: (title: string) => void; addAssignment: () => void; }
+) {
     return (
         <div id="wd-assignments-controls" className="assignment-control">
             <div className="input-wrapper">
@@ -14,11 +18,24 @@ export default function AssignmentControls() {
             </div>
 
             <div className="d-inline me-1 float-end">
-                <button id="wd-add-assignment" className="btn btn-lg btn-danger me-1">+ Assignment</button>
+                <button 
+                    id="wd-add-assignment-btn" 
+                    className="btn btn-lg btn-danger me-1"
+                    data-bs-toggle="modal" data-bs-target="#wd-add-assignment-dialog"
+                >
+                    + Assignment
+                </button>
+                <AssignmentEditor 
+                    dialogTitle="Add Assignment" 
+                    assignmentName={assignmentName} 
+                    setAssignmentName={setAssignmentName} 
+                    addAssignment={addAssignment} 
+                />     
             </div>
             <div className="d-inline me-1 float-end">
                 <button id="wd-add-assignment-group" className="btn btn-lg btn-secondary me-1">+ Group</button>
             </div>
+            
         </div>
     );
 }
