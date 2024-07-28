@@ -1,9 +1,9 @@
-import React from 'react';
-import Select from 'react-select';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateAssignment } from './assignmentsReducer';
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import assignments from "../../Database/assignments.json";
 
 const options = [
@@ -25,26 +25,44 @@ interface Assignment {
 }
 
 export default function AssignmentEditor() {
-  const { aid } = useParams<{ aid: string }>();
+  const { cid, aid } = useParams<{ cid: string, aid: string }>();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const reduxAssignments = useSelector((state: any) => state.assignmentsReducer.assignments as Assignment[]);
 
-  // First, try to find the assignment in Redux state
-  let assignment = reduxAssignments.find(a => a._id === aid);
+  const [localAssignment, setLocalAssignment] = useState<Assignment | null>(null);
 
-  // If not found in Redux state, fall back to the JSON data
-  if (!assignment) {
-    assignment = assignments.find(a => a._id === aid) as Assignment;
-  }
+  useEffect(() => {
+    // First, try to find the assignment in Redux state
+    let assignment = reduxAssignments.find(a => a._id === aid);
 
-  if (!assignment) {
+    // If not found in Redux state, fall back to the JSON data
+    if (!assignment) {
+      assignment = assignments.find(a => a._id === aid) as Assignment;
+    }
+
+    if (assignment) {
+      setLocalAssignment(assignment);
+    }
+  }, [aid, reduxAssignments]);
+
+  if (!localAssignment) {
     return <div>Assignment not found ID: {aid}</div>;
   }
 
   const handleInputChange = (field: keyof Assignment, value: any) => {
-    if (assignment) {
-      dispatch(updateAssignment({ ...assignment, [field]: value }));
+    setLocalAssignment(prev => prev ? { ...prev, [field]: value } : null);
+  };
+
+  const handleSave = () => {
+    if (localAssignment) {
+      dispatch(updateAssignment(localAssignment));
+      navigate(`/Kanbas/Courses/${cid}/Assignments`);
     }
+  };
+
+  const handleCancel = () => {
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
 
   return (
@@ -52,8 +70,8 @@ export default function AssignmentEditor() {
       <div className="mb-3">
         <label htmlFor="wd-name" className="form-label">Assignment Name</label>
         <input 
-          id={`wd-name-${assignment._id}`} 
-          defaultValue={assignment.title} 
+          id={`wd-name-${localAssignment._id}`} 
+          value={localAssignment.title} 
           className="form-control"
           onChange={(e) => handleInputChange('title', e.target.value)}
         />
@@ -65,7 +83,7 @@ export default function AssignmentEditor() {
           id="wd-description" 
           className="form-control" 
           rows={5} 
-          defaultValue={assignment.description || "The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section, Links to each of the lab assignments, Link to the Kanbas application, Links to all relevant source code repositories. The Kanbas application should include a link to navigate back to the landing page."}
+          value={localAssignment.description || ""}
           onChange={(e) => handleInputChange('description', e.target.value)}
         />
       </div>
@@ -75,7 +93,7 @@ export default function AssignmentEditor() {
         <div className="col-sm-10">
           <input 
             id="wd-points" 
-            defaultValue={assignment.pts} 
+            value={localAssignment.pts} 
             className="form-control"
             onChange={(e) => handleInputChange('pts', parseInt(e.target.value))}
           />
@@ -151,7 +169,7 @@ export default function AssignmentEditor() {
               <input 
                 type="datetime-local" 
                 id="wd-due-date" 
-                defaultValue={assignment.due || "2024-05-13T23:59"} 
+                value={localAssignment.due || "2024-05-13T23:59"} 
                 className="form-control mb-3"
                 onChange={(e) => handleInputChange('due', e.target.value)}
               />
@@ -162,7 +180,7 @@ export default function AssignmentEditor() {
                   <input 
                     type="datetime-local" 
                     id="wd-available-from" 
-                    defaultValue={assignment.available || "2024-05-06T00:00"} 
+                    value={localAssignment.available || "2024-05-06T00:00"} 
                     className="form-control"
                     onChange={(e) => handleInputChange('available', e.target.value)}
                   />
@@ -179,8 +197,8 @@ export default function AssignmentEditor() {
 
       <hr />
       <div className="text-end">
-        <button className="btn btn-secondary me-2">Cancel</button>
-        <button className="btn btn-primary">Save</button>
+        <button className="btn btn-secondary me-2" onClick={handleCancel}>Cancel</button>
+        <button className="btn btn-primary" onClick={handleSave}>Save</button>
       </div>
     </div>
   );
