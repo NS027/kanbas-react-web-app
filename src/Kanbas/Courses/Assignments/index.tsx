@@ -8,7 +8,6 @@ import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import "./StyledBox.css";
 import { AiOutlineFileText } from 'react-icons/ai';
 import { useParams } from "react-router";
-import assignments from '../../Database/assignments.json';
 import * as db from "../../Database";
 
 export default function Assignments() {
@@ -39,7 +38,7 @@ export default function Assignments() {
           title: "New Assignment",
           course: cid,
           shortname: `A${nextAssignmentNumber}`,
-          avaliable: "Not available until May 1 at 12:00am",
+          available: "Not available until May 1 at 12:00am",
           due: "Due on May 15 at 11:59pm",
           pts: 100,
           editing: false
@@ -54,7 +53,7 @@ export default function Assignments() {
         title: "New Assignment",
         course: cid,
         shortname: `A${nextAssignmentNumber}`,
-        avaliable: "Not available until May 1 at 12:00am",
+        available: "Not available until May 1 at 12:00am",
         due: "Due on May 15 at 11:59pm",
         pts: 100,
         editing: false
@@ -125,8 +124,8 @@ export default function Assignments() {
                           />
                           <input 
                               className="form-control mb-1"
-                              value={assignment.avaliable}
-                              onChange={(e) => handleInputChange(assignment._id, 'avaliable', e.target.value)}
+                              value={assignment.available}
+                              onChange={(e) => handleInputChange(assignment._id, 'available', e.target.value)}
                           />
                           <input 
                               className="form-control mb-1"
@@ -150,7 +149,7 @@ export default function Assignments() {
                       </div>
                       <div className="text-muted">
                         {/* All discription based on the modifiable json data */}
-                        <span className="text-danger">Multiple Modules</span> | <span className="text-muted">{assignment.avaliable}</span> | {assignment.due} | {assignment.pts} pts
+                        <span className="text-danger">Multiple Modules</span> | <span className="text-muted">{assignment.available}</span> | {assignment.due} | {assignment.pts} pts
                       </div>
                     </div>
                     )}
