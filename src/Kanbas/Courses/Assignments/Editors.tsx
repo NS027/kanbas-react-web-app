@@ -10,7 +10,6 @@ const options = [
   { value: 'everyone', label: 'Everyone' },
   { value: 'student1', label: 'Student 1' },
   { value: 'student2', label: 'Student 2' },
-  // Add more options as needed
 ];
 
 interface Assignment {
@@ -24,6 +23,40 @@ interface Assignment {
   description?: string;
 }
 
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleString('default', { month: 'long', day: 'numeric' });
+};
+
+const formatTime = (timeString: string): string => {
+  const [hours, minutes] = timeString.split(':');
+  const date = new Date();
+  date.setHours(parseInt(hours), parseInt(minutes));
+  return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toLowerCase();
+};
+
+const parseDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toISOString().split('T')[0];
+};
+
+const parseTime = (timeString: string): string => {
+  if (!timeString) return "00:00"; 
+
+  const [time, period] = timeString.split(' ');
+  if (!time || !period) return "00:00"; 
+
+  let [hours, minutes] = time.split(':');
+  if (!hours || !minutes) return "00:00"; 
+
+  if (period.toLowerCase() === 'pm' && hours !== '12') {
+    hours = String(parseInt(hours) + 12);
+  } else if (period.toLowerCase() === 'am' && hours === '12') {
+    hours = '00';
+  }
+  return `${hours.padStart(2, '0')}:${minutes}`;
+};
+
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string, aid: string }>();
   const dispatch = useDispatch();
@@ -31,18 +64,36 @@ export default function AssignmentEditor() {
   const reduxAssignments = useSelector((state: any) => state.assignmentsReducer.assignments as Assignment[]);
 
   const [localAssignment, setLocalAssignment] = useState<Assignment | null>(null);
+  const [availableDate, setAvailableDate] = useState("");
+  const [availableTime, setAvailableTime] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [dueTime, setDueTime] = useState("");
 
   useEffect(() => {
-    // First, try to find the assignment in Redux state
     let assignment = reduxAssignments.find(a => a._id === aid);
-
-    // If not found in Redux state, fall back to the JSON data
     if (!assignment) {
       assignment = assignments.find(a => a._id === aid) as Assignment;
     }
-
     if (assignment) {
       setLocalAssignment(assignment);
+      
+      const availableMatch = assignment.available.match(/Not available until (.*) at (.*)/);
+      if (availableMatch && availableMatch[1] && availableMatch[2]) {
+        setAvailableDate(parseDate(availableMatch[1]));
+        setAvailableTime(parseTime(availableMatch[2]));
+      } else {
+        setAvailableDate("");
+        setAvailableTime("");
+      }
+  
+      const dueMatch = assignment.due.match(/Due (.*) at (.*)/);
+      if (dueMatch && dueMatch[1] && dueMatch[2]) {
+        setDueDate(parseDate(dueMatch[1]));
+        setDueTime(parseTime(dueMatch[2]));
+      } else {
+        setDueDate("");
+        setDueTime("");
+      }
     }
   }, [aid, reduxAssignments]);
 
@@ -52,6 +103,20 @@ export default function AssignmentEditor() {
 
   const handleInputChange = (field: keyof Assignment, value: any) => {
     setLocalAssignment(prev => prev ? { ...prev, [field]: value } : null);
+  };
+
+  const updateAvailable = (date: string, time: string) => {
+    const formattedDate = formatDate(date);
+    const formattedTime = formatTime(time);
+    const newAvailable = `Not available until ${formattedDate} at ${formattedTime}`;
+    handleInputChange('available', newAvailable);
+  };
+
+  const updateDue = (date: string, time: string) => {
+    const formattedDate = formatDate(date);
+    const formattedTime = formatTime(time);
+    const newDue = `Due ${formattedDate} at ${formattedTime}`;
+    handleInputChange('due', newDue);
   };
 
   const handleSave = () => {
@@ -165,30 +230,52 @@ export default function AssignmentEditor() {
                 className="mb-3"
               />
 
-              <label htmlFor="wd-due-date" className="form-label">Due</label>
-              <input 
-                type="datetime-local" 
-                id="wd-due-date" 
-                value={localAssignment.due || "2024-05-13T23:59"} 
-                className="form-control mb-3"
-                onChange={(e) => handleInputChange('due', e.target.value)}
-              />
-              
-              <div className="row">
-                <div className="col-sm-6">
-                  <label htmlFor="wd-available-from" className="form-label">Available from</label>
-                  <input 
-                    type="datetime-local" 
-                    id="wd-available-from" 
-                    value={localAssignment.available || "2024-05-06T00:00"} 
-                    className="form-control"
-                    onChange={(e) => handleInputChange('available', e.target.value)}
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <label htmlFor="wd-available-until" className="form-label">Until</label>
-                  <input type="datetime-local" id="wd-available-until" defaultValue="2024-05-28T23:59" className="form-control" />
-                </div>
+              <label htmlFor="wd-available" className="form-label">Available</label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">Not available until</span>
+                <input 
+                  type="date" 
+                  value={availableDate}
+                  onChange={(e) => {
+                    setAvailableDate(e.target.value);
+                    updateAvailable(e.target.value, availableTime);
+                  }}
+                  className="form-control"
+                />
+                <span className="input-group-text">at</span>
+                <input 
+                  type="time" 
+                  value={availableTime}
+                  onChange={(e) => {
+                    setAvailableTime(e.target.value);
+                    updateAvailable(availableDate, e.target.value);
+                  }}
+                  className="form-control"
+                />
+              </div>
+
+              <label htmlFor="wd-due" className="form-label">Due</label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">Due</span>
+                <input 
+                  type="date" 
+                  value={dueDate}
+                  onChange={(e) => {
+                    setDueDate(e.target.value);
+                    updateDue(e.target.value, dueTime);
+                  }}
+                  className="form-control"
+                />
+                <span className="input-group-text">at</span>
+                <input 
+                  type="time" 
+                  value={dueTime}
+                  onChange={(e) => {
+                    setDueTime(e.target.value);
+                    updateDue(dueDate, e.target.value);
+                  }}
+                  className="form-control"
+                />
               </div>
             </div>
           </div>
