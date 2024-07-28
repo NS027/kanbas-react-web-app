@@ -1,9 +1,17 @@
 export default function AssignmentEditor(
-    { dialogTitle, assignmentName, setAssignmentName, addAssignment }:
-    {
+    { 
+        dialogTitle, 
+        assignmentName, 
+        setAssignmentName, 
+        assignmentDescription, 
+        setAssignmentDescription, 
+        addAssignment 
+    }: {
         dialogTitle: string;
         assignmentName: string;
         setAssignmentName: (name: string) => void;
+        assignmentDescription: string;
+        setAssignmentDescription: (description: string) => void;
         addAssignment: () => void;
     }
 ) {
@@ -19,10 +27,17 @@ export default function AssignmentEditor(
                     </div>
                     <div className="modal-body">
                         <input
-                            className="form-control"
+                            className="form-control mb-2"
                             value={assignmentName}
                             placeholder="Assignment Name"
                             onChange={(e) => setAssignmentName(e.target.value)}
+                        />
+                        <textarea
+                            className="form-control"
+                            value={assignmentDescription}
+                            placeholder="Assignment Description"
+                            onChange={(e) => setAssignmentDescription(e.target.value)}
+                            rows={3}
                         />
                     </div>
                     <div className="modal-footer">

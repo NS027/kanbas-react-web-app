@@ -21,6 +21,7 @@ interface Assignment {
   available: string;
   due: string;
   pts: number;
+  description?: string;
 }
 
 // Define the RootState interface
@@ -34,6 +35,9 @@ export default function Assignments() {
     const { cid } = useParams<{ cid: string }>();
     const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
     const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
+
+    const [assignmentName, setAssignmentName] = useState('');
+    const [assignmentDescription, setAssignmentDescription] = useState('New Assignment Description');
 
     const courseSequence = cid ? cid.match(/\d+/)?.[0].slice(0, 2) : '';
 
@@ -51,21 +55,8 @@ export default function Assignments() {
     const addNewAssignment = () => {
       const newAssignment: Assignment = {
           _id: getNextAssignmentId(nextAssignmentNumber),
-          title: "New Assignment",
-          course: cid || '',
-          shortname: `A${nextAssignmentNumber}`,
-          available: "Not available until May 1 at 12:00am",
-          due: "Due on May 15 at 11:59pm",
-          pts: 100,
-      };
-      dispatch(addAssignment(newAssignment));
-    };
-
-    const [assignmentName, setAssignmentName] = useState('');
-    const addAssignmentWithName = () => {
-      const newAssignment: Assignment = {
-          _id: getNextAssignmentId(nextAssignmentNumber),
-          title: assignmentName,
+          title: assignmentName || "New Assignment",
+          description: assignmentDescription,
           course: cid || '',
           shortname: `A${nextAssignmentNumber}`,
           available: "Not available until May 1 at 12:00am",
@@ -74,6 +65,7 @@ export default function Assignments() {
       };
       dispatch(addAssignment(newAssignment));
       setAssignmentName('');
+      setAssignmentDescription('New Assignment Description');
     };
 
     const deleteAssignmentById = (id: string) => {
@@ -89,7 +81,13 @@ export default function Assignments() {
 
     return (
       <div id="wd-assignments">
-        <AssignmentControls assignmentName={assignmentName} setAssignmentName={setAssignmentName} addAssignment={addAssignmentWithName}/>
+        <AssignmentControls 
+          assignmentName={assignmentName} 
+          setAssignmentName={setAssignmentName} 
+          assignmentDescription={assignmentDescription}
+          setAssignmentDescription={setAssignmentDescription}
+          addAssignment={addNewAssignment}
+        />
         <br /><br /><br /><br />
         <ul id="wd-modules" className="list-group rounded-0">
             <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">

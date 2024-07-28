@@ -1,9 +1,16 @@
 import { SlMagnifier } from "react-icons/sl";
 import "./InputWithIcon.css";
 import AssignmentEditor from "./AssignmentEditor";
+
 export default function AssignmentControls(
-    { assignmentName, setAssignmentName, addAssignment }:
-    { assignmentName: string; setAssignmentName: (title: string) => void; addAssignment: () => void; }
+    { assignmentName, setAssignmentName, assignmentDescription, setAssignmentDescription, addAssignment }:
+    { 
+        assignmentName: string; 
+        setAssignmentName: (title: string) => void; 
+        assignmentDescription: string;
+        setAssignmentDescription: (description: string) => void;
+        addAssignment: () => void; 
+    }
 ) {
     return (
         <div id="wd-assignments-controls" className="assignment-control">
@@ -28,13 +35,14 @@ export default function AssignmentControls(
                     dialogTitle="Add Assignment" 
                     assignmentName={assignmentName} 
                     setAssignmentName={setAssignmentName} 
+                    assignmentDescription={assignmentDescription}
+                    setAssignmentDescription={setAssignmentDescription}
                     addAssignment={addAssignment} 
                 />     
             </div>
             <div className="d-inline me-1 float-end">
                 <button id="wd-add-assignment-group" className="btn btn-lg btn-secondary me-1">+ Group</button>
             </div>
-            
         </div>
     );
 }
