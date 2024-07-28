@@ -1,4 +1,3 @@
-// AssignmentEditor.tsx
 export default function AssignmentEditor(
     { dialogTitle, assignmentName, setAssignmentName, addAssignment }:
     {
@@ -38,4 +37,4 @@ export default function AssignmentEditor(
             </div>
         </div>
     );
-    }
+}

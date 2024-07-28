@@ -1,4 +1,3 @@
-// AssingmentControls.tsx
 import { SlMagnifier } from "react-icons/sl";
 import "./InputWithIcon.css";
 import AssignmentEditor from "./AssignmentEditor";

@@ -2,8 +2,9 @@ import React from 'react';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateAssignment } from './assignmentsReducer';
 import assignments from "../../Database/assignments.json";
-import * as db from "../../Database";
 
 const options = [
   { value: 'everyone', label: 'Everyone' },
@@ -12,34 +13,72 @@ const options = [
   // Add more options as needed
 ];
 
+interface Assignment {
+  _id: string;
+  title: string;
+  course: string;
+  shortname: string;
+  available: string;
+  due: string;
+  pts: number;
+  description?: string;
+}
+
 export default function AssignmentEditor() {
-  const { aid } = useParams();
-  const assignments = db.assignments;
-  const assignment = assignments.find(assignment => assignment._id === aid);
-  // const courseAssignments = assignments.filter(assignment => assignment._id === aid); 
-  // const assignment = courseAssignments[0];
+  const { aid } = useParams<{ aid: string }>();
+  const dispatch = useDispatch();
+  const reduxAssignments = useSelector((state: any) => state.assignmentsReducer.assignments as Assignment[]);
+
+  // First, try to find the assignment in Redux state
+  let assignment = reduxAssignments.find(a => a._id === aid);
+
+  // If not found in Redux state, fall back to the JSON data
+  if (!assignment) {
+    assignment = assignments.find(a => a._id === aid) as Assignment;
+  }
 
   if (!assignment) {
     return <div>Assignment not found ID: {aid}</div>;
   }
+
+  const handleInputChange = (field: keyof Assignment, value: any) => {
+    if (assignment) {
+      dispatch(updateAssignment({ ...assignment, [field]: value }));
+    }
+  };
+
   return (
     <div id="wd-assignments-editor" className="container mt-4">
-
       <div className="mb-3">
         <label htmlFor="wd-name" className="form-label">Assignment Name</label>
-        <input id={`wd-name-${assignment._id}`} defaultValue={assignment.title} className="form-control" />
+        <input 
+          id={`wd-name-${assignment._id}`} 
+          defaultValue={assignment.title} 
+          className="form-control"
+          onChange={(e) => handleInputChange('title', e.target.value)}
+        />
       </div>
 
-      
       <div className="mb-3">
         <label htmlFor="wd-description" className="form-label">Description</label>
-        <textarea id="wd-description" className="form-control" rows={5} defaultValue="The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section, Links to each of the lab assignments, Link to the Kanbas application, Links to all relevant source code repositories. The Kanbas application should include a link to navigate back to the landing page." />
+        <textarea 
+          id="wd-description" 
+          className="form-control" 
+          rows={5} 
+          defaultValue={assignment.description || "The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section, Links to each of the lab assignments, Link to the Kanbas application, Links to all relevant source code repositories. The Kanbas application should include a link to navigate back to the landing page."}
+          onChange={(e) => handleInputChange('description', e.target.value)}
+        />
       </div>
 
       <div className="mb-3 row">
         <label htmlFor="wd-points" className="col-sm-2 col-form-label">Points</label>
         <div className="col-sm-10">
-          <input id="wd-points" defaultValue={100} className="form-control" />
+          <input 
+            id="wd-points" 
+            defaultValue={assignment.pts} 
+            className="form-control"
+            onChange={(e) => handleInputChange('pts', parseInt(e.target.value))}
+          />
         </div>
       </div>
       
@@ -109,12 +148,24 @@ export default function AssignmentEditor() {
               />
 
               <label htmlFor="wd-due-date" className="form-label">Due</label>
-              <input type="datetime-local" id="wd-due-date" defaultValue="2024-05-13T23:59" className="form-control mb-3" />
+              <input 
+                type="datetime-local" 
+                id="wd-due-date" 
+                defaultValue={assignment.due || "2024-05-13T23:59"} 
+                className="form-control mb-3"
+                onChange={(e) => handleInputChange('due', e.target.value)}
+              />
               
               <div className="row">
                 <div className="col-sm-6">
                   <label htmlFor="wd-available-from" className="form-label">Available from</label>
-                  <input type="datetime-local" id="wd-available-from" defaultValue="2024-05-06T00:00" className="form-control" />
+                  <input 
+                    type="datetime-local" 
+                    id="wd-available-from" 
+                    defaultValue={assignment.available || "2024-05-06T00:00"} 
+                    className="form-control"
+                    onChange={(e) => handleInputChange('available', e.target.value)}
+                  />
                 </div>
                 <div className="col-sm-6">
                   <label htmlFor="wd-available-until" className="form-label">Until</label>
