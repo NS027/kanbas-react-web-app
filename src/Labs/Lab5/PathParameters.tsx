@@ -1,4 +1,5 @@
 import { useState } from "react";
+const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 
 export default function EncodingParametersinURLs() {
     const [a, setA] = useState("34");
@@ -11,12 +12,20 @@ export default function EncodingParametersinURLs() {
             <input type="number" value={b}
                 onChange={(e) => setB(e.target.value)}/>
             <h3>Path Parameters</h3>
-            <a href={`http://localhost:4000/lab5/add/${a}/${b}`}>
+            <a href={`${REMOTE_SERVER}/lab5/add/${a}/${b}`}>
                 Add {a} + {b}
             </a>
             <br />
-            <a href={`http://localhost:4000/lab5/subtract/${a}/${b}`}>
+            <a href={`${REMOTE_SERVER}/lab5/subtract/${a}/${b}`}>
                 Subtract {a} - {b}
+            </a>
+            <br />
+            <a href={`${REMOTE_SERVER}/lab5/multiply/${a}/${b}`}>
+                Multiply {a} * {b}
+            </a>
+            <br />
+            <a href={`${REMOTE_SERVER}/lab5/divide/${a}/${b}`}>
+                Divide {a} / {b}
             </a>
         </div>
     );
