@@ -1,6 +1,7 @@
 import PathParameters from "./PathParameters";
 import EnvironmentVariables from "./EnvironmentVariables";
 import WorkingWithObjects from "./WorkingWithObjects";
+import WorkingWithArrays from "./WorkingWithArrays";
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 
 export default function Lab5() {
@@ -18,6 +19,8 @@ export default function Lab5() {
             <PathParameters />
             <hr />
             <WorkingWithObjects />
+            <hr />
+            <WorkingWithArrays />
         </div>
     );
 }
