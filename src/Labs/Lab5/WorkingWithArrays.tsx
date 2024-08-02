@@ -24,20 +24,24 @@ export default function WorkingWithArrays() {
             <input id="wd-todo-id" value={todo.id} className="from-control w-50"
                 onChange={(e) => setTodo({ ...todo, id: e.target.value})} />
             <hr/>
+            
             <h3>Filtering Array Items</h3>
             <a id="wd-retrieve-completed-todos" className="btn btn-primary"
                 href={`${API}?completed=true`}>
                 Get Completed Todos
             </a><hr/>
+            
             <h3>Creating new Items in an Array</h3>
                 <a id="wd-retrieve-completed-todos" className="btn btn-primary"
                 href={`${API}/create`}>
                 Create Todo
             </a><hr/>
+            
             <h3>Deleting from an Array</h3>
             <a id="wd-retrieve-completed-todos" className="btn btn-primary float-end" href={`${API}/${todo.id}/delete`}>
             Delete Todo with ID = {todo.id} </a>
             <input value={todo.id} className="form-control w-50" onChange={(e) => setTodo({ ...todo, id: e.target.value })}/><hr/>
+            
             <h3>Updating an Item in an Array</h3>
             <a href={`${API}/${todo.id}/title/${todo.title}`} className="btn btn-primary float-end">
             Update Todo</a>
@@ -46,5 +50,31 @@ export default function WorkingWithArrays() {
             <input value={todo.title} className="form-control w-50 float-start"
                 onChange={(e) => setTodo({ ...todo, title: e.target.value }) }/>
             <br /><br /><hr />
+
+            <h3>Updating Todo Description</h3>
+            <a href={`${API}/${todo.id}/description/${encodeURIComponent(todo.description)}`} 
+               className="btn btn-primary float-end">
+                Update Description
+            </a>
+            <input value={todo.id} className="form-control w-25 float-start me-2"
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })}/>
+            <input value={todo.description} className="form-control w-50 float-start"
+                onChange={(e) => setTodo({ ...todo, description: e.target.value })}/>
+            <br /><br /><hr />
+
+            <h3>Updating Todo Completed Status</h3>
+            <a href={`${API}/${todo.id}/completed/${todo.completed}`} 
+               className="btn btn-primary float-end">
+                Update Completed Status with ID = {todo.id}
+            </a>
+            <input value={todo.id} className="form-control w-25 float-start me-2"
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })}/>
+            <input type="checkbox" className="form-check-input float-start mt-2"
+                checked={todo.completed}
+                onChange={(e) => setTodo({ ...todo, completed: e.target.checked })}/>
+            <label className="form-check-label float-start mt-1 ms-2">Completed</label>
+            <br /><br /><hr />
+
+
         </div>
 );}
