@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { BsGripVertical } from 'react-icons/bs';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { AiOutlineFileText } from 'react-icons/ai';
-import { useParams } from "react-router";
-import { addAssignment, deleteAssignment } from './assignmentsReducer';
+import { addAssignment, deleteAssignment, setAssignments, updateAssignment } from './assignmentsReducer';
 import './StyledBox.css';
 import AssignmentControls from './AssignmentControls';
 import AssignmentControlButtons from './AssignmentControlButtons';
-import DeleteAssignmentModal from './DeleteAssignmentModal'; // Import the modal
+import DeleteAssignmentModal from './DeleteAssignmentModal';
+import * as client from './client';
 
-// Define the Assignment interface
 interface Assignment {
   _id: string;
   title: string;
@@ -25,7 +25,6 @@ interface Assignment {
   description?: string;
 }
 
-// Define the RootState interface
 interface RootState {
   assignmentsReducer: {
     assignments: Assignment[];
@@ -35,38 +34,35 @@ interface RootState {
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>();
   const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
-  const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
+  const assignments = useSelector((state: RootState) => 
+    state.assignmentsReducer.assignments.filter(a => a.course === cid)
+  );
 
   const [assignmentName, setAssignmentName] = useState('');
   const [assignmentDescription, setAssignmentDescription] = useState('New Assignment Description');
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [assignmentToDelete, setAssignmentToDelete] = useState<Assignment | null>(null);
 
-  const courseSequence = cid ? cid.match(/\d+/)?.[0].slice(0, 2) : '';
-
-  const getNextAssignmentNumber = () => {
-    const assignmentCount = assignments.filter((a: Assignment) => a.course === cid).length;
-    return assignmentCount + 1;
-  };
-
-  const getNextAssignmentId = (assignmentNumber: number) => {
-    return `A${courseSequence}${assignmentNumber}`;
-  };
-
-  const nextAssignmentNumber = getNextAssignmentNumber();
-  
-  const addNewAssignment = () => {
-    const newAssignment: Assignment = {
-        _id: getNextAssignmentId(nextAssignmentNumber),
-        title: assignmentName || "New Assignment",
-        description: assignmentDescription,
-        course: cid || '',
-        shortname: `A${nextAssignmentNumber}`,
-        available: "Not available until May 1 at 12:00am",
-        due: "Due on May 15 at 11:59pm",
-        pts: 100,
+  useEffect(() => {
+    const fetchAssignments = async () => {
+      const fetchedAssignments = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(fetchedAssignments));
     };
-    dispatch(addAssignment(newAssignment));
+    fetchAssignments();
+  }, [cid, dispatch]);
+
+  const addNewAssignment = async () => {
+    const newAssignment: Partial<Assignment> = {
+      title: assignmentName || "New Assignment",
+      description: assignmentDescription,
+      course: cid,
+      shortname: `A${assignments.length + 1}`,
+      available: "Not available until May 1 at 12:00am",
+      due: "Due on May 15 at 11:59pm",
+      pts: 100,
+    };
+    const createdAssignment = await client.createAssignment(cid as string, newAssignment);
+    dispatch(addAssignment(createdAssignment));
     setAssignmentName('');
     setAssignmentDescription('New Assignment Description');
   };
@@ -76,8 +72,9 @@ export default function Assignments() {
     setShowDeleteDialog(true);
   };
 
-  const handleDeleteConfirmation = () => {
+  const handleDeleteConfirmation = async () => {
     if (assignmentToDelete) {
+      await client.deleteAssignment(assignmentToDelete._id);
       dispatch(deleteAssignment(assignmentToDelete._id));
       setShowDeleteDialog(false);
       setAssignmentToDelete(null);
@@ -89,7 +86,12 @@ export default function Assignments() {
     setAssignmentToDelete(null);
   };
 
-  return (
+  const handleUpdateAssignment = async (assignment: Assignment) => {
+    const updatedAssignment = await client.updateAssignment(assignment);
+    dispatch(updateAssignment(updatedAssignment));
+  };
+
+    return (
     <div id="wd-assignments">
       <AssignmentControls 
         assignmentName={assignmentName} 

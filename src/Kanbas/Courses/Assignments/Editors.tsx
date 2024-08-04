@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateAssignment } from './assignmentsReducer';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import assignments from "../../Database/assignments.json";
+// import assignments from "../../Database/assignments.json";
+import * as client from './client';
 
 const options = [
   { value: 'everyone', label: 'Everyone' },
@@ -70,32 +71,37 @@ export default function AssignmentEditor() {
   const [dueTime, setDueTime] = useState("");
 
   useEffect(() => {
-    let assignment = reduxAssignments.find(a => a._id === aid);
-    if (!assignment) {
-      assignment = assignments.find(a => a._id === aid) as Assignment;
-    }
-    if (assignment) {
-      setLocalAssignment(assignment);
-      
-      const availableMatch = assignment.available.match(/Not available until (.*) at (.*)/);
-      if (availableMatch && availableMatch[1] && availableMatch[2]) {
-        setAvailableDate(parseDate(availableMatch[1]));
-        setAvailableTime(parseTime(availableMatch[2]));
-      } else {
-        setAvailableDate("");
-        setAvailableTime("");
+    const fetchAssignment = async () => {
+      let assignment = reduxAssignments.find(a => a._id === aid);
+      if (!assignment) {
+        const fetchedAssignments = await client.findAssignmentsForCourse(cid as string);
+        assignment = fetchedAssignments.find((a: Assignment) => a._id === aid);
       }
-  
-      const dueMatch = assignment.due.match(/Due (.*) at (.*)/);
-      if (dueMatch && dueMatch[1] && dueMatch[2]) {
-        setDueDate(parseDate(dueMatch[1]));
-        setDueTime(parseTime(dueMatch[2]));
-      } else {
-        setDueDate("");
-        setDueTime("");
+      if (assignment) {
+        setLocalAssignment(assignment);
+        
+        const availableMatch = assignment.available.match(/Not available until (.*) at (.*)/);
+        if (availableMatch && availableMatch[1] && availableMatch[2]) {
+          setAvailableDate(parseDate(availableMatch[1]));
+          setAvailableTime(parseTime(availableMatch[2]));
+        } else {
+          setAvailableDate("");
+          setAvailableTime("");
+        }
+    
+        const dueMatch = assignment.due.match(/Due (.*) at (.*)/);
+        if (dueMatch && dueMatch[1] && dueMatch[2]) {
+          setDueDate(parseDate(dueMatch[1]));
+          setDueTime(parseTime(dueMatch[2]));
+        } else {
+          setDueDate("");
+          setDueTime("");
+        }
       }
-    }
-  }, [aid, reduxAssignments]);
+    };
+    fetchAssignment();
+  }, [aid, cid, reduxAssignments]);
+
 
   if (!localAssignment) {
     return <div>Assignment not found ID: {aid}</div>;
@@ -119,9 +125,10 @@ export default function AssignmentEditor() {
     handleInputChange('due', newDue);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (localAssignment) {
-      dispatch(updateAssignment(localAssignment));
+      const updatedAssignment = await client.updateAssignment(localAssignment);
+      dispatch(updateAssignment(updatedAssignment));
       navigate(`/Kanbas/Courses/${cid}/Assignments`);
     }
   };

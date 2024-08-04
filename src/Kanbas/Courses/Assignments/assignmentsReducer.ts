@@ -1,9 +1,23 @@
-// src/Kanbas/Courses/Assignments/assignmentsReducer.ts
-import { createSlice } from "@reduxjs/toolkit";
-import assignments from "../../Database/assignments.json";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  assignments: assignments,
+interface Assignment {
+  _id: string;
+  title: string;
+  course: string;
+  shortname: string;
+  available: string;
+  due: string;
+  pts: number;
+  description?: string;
+}
+
+interface AssignmentsState {
+  assignments: Assignment[];
+  assignment: Partial<Assignment>;
+}
+
+const initialState: AssignmentsState = {
+  assignments: [],
   assignment: { title: "New Assignment" },
 };
 
@@ -11,24 +25,34 @@ const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
-    addAssignment: (state, action) => {
+    setAssignments: (state, action: PayloadAction<Assignment[]>) => {
+      state.assignments = action.payload;
+    },
+    addAssignment: (state, action: PayloadAction<Assignment>) => {
       state.assignments.push(action.payload);
     },
-    deleteAssignment: (state, action) => {
+    deleteAssignment: (state, action: PayloadAction<string>) => {
       state.assignments = state.assignments.filter(
         (assignment) => assignment._id !== action.payload
       );
     },
-    updateAssignment: (state, action) => {
+    updateAssignment: (state, action: PayloadAction<Assignment>) => {
       state.assignments = state.assignments.map((assignment) =>
         assignment._id === action.payload._id ? action.payload : assignment
       );
     },
-    setAssignment: (state, action) => {
+    setAssignment: (state, action: PayloadAction<Partial<Assignment>>) => {
       state.assignment = action.payload;
     },
   },
 });
 
-export const { addAssignment, deleteAssignment, updateAssignment, setAssignment } = assignmentsSlice.actions;
+export const { 
+  setAssignments, 
+  addAssignment, 
+  deleteAssignment, 
+  updateAssignment, 
+  setAssignment 
+} = assignmentsSlice.actions;
+
 export default assignmentsSlice.reducer;
