@@ -17,19 +17,15 @@ export default function CoursesNavigation() {
 
   useEffect(() => {
     const fetchCourse = async () => {
-      // console.log(`Fetching course with ID: ${cid}`); // Debugging statement
       try {
         const response = await fetch(`http://localhost:4000/api/courses/${cid}`);
         if (response.ok) {
           const courseData: Course = await response.json();
-          // console.log('Course data fetched:', courseData); // Debugging statement
           setCourse(courseData);
         } else {
-          // console.error('Failed to fetch course:', response.statusText); // Debugging statement
           setCourse(null);
         }
       } catch (error) {
-        // console.error('Error fetching course:', error); // Debugging statement
         setCourse(null);
       } finally {
         setLoading(false);
