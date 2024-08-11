@@ -52,7 +52,7 @@ export default function CoursesNavigation() {
     return <div>No course available</div>;
   }
 
-  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades"];
+  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
 
   return (
     <div className="d-flex">
