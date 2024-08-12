@@ -10,6 +10,7 @@ import * as client from "./Courses/client";
 import store from "./store";
 import { Provider } from "react-redux";
 import Account from "./Account";
+import Session from "./Account/Session";
 //import ProtectedRoute from "./ProtectedRoute";
 
 export default function Kanbas() {
@@ -51,6 +52,7 @@ export default function Kanbas() {
         );
   };
     return (
+      // <Session>
       <Provider store={store}>
       <div id="wd-kanbas">
         <KanbasNavigation />
@@ -78,5 +80,6 @@ export default function Kanbas() {
         </div>
       </div>
       </Provider>
+      // </Session>
   );}
   
