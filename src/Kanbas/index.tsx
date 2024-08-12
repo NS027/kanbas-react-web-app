@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import * as client from "./Courses/client";
 import store from "./store";
 import { Provider } from "react-redux";
-import Account from "./Account";
-import Session from "./Account/Session";
+import Account from "./Courses/Account";
+import Session from "./Courses/Account/Session";
 //import ProtectedRoute from "./ProtectedRoute";
 
 export default function Kanbas() {
