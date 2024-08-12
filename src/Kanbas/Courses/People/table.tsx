@@ -4,6 +4,7 @@ import PeopleDetails from './Details';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
+import { FaRegCircleUser } from 'react-icons/fa6';
 export default function PeopleTable() {
     const { cid } = useParams();
     const [users, setUsers] = useState<any[]>([]);
@@ -78,7 +79,8 @@ export default function PeopleTable() {
                 {users.map((user: any) => (
                     <tr key={user._id}>
                         <td className="wd-full-name text-nowrap">
-                            <Link to={`/Kanbas/Courses/${cid}/People/${user._id}`}>
+                            <FaRegCircleUser className="me-2" />
+                            <Link to={`/Kanbas/Courses/${cid}/People/${user._id}`}> 
                                 <span className="wd-first-name">{user.firstName}</span>
                                 <span className="wd-last-name">{user.lastName}</span>
                             </Link>
